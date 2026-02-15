@@ -31,9 +31,7 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-def root():
-    return {"status": "MedGuard API running"}
+
 
 
 # ── Routers ──────────────────────────────────────────────
@@ -53,6 +51,12 @@ frontend_dist = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "
 
 if os.path.exists(frontend_dist):
     app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
+
+    @app.get("/")
+    async def serve_spa_root():
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
+
+
 
     # Catch-all for React Router (SPA)
     @app.get("/{full_path:path}")

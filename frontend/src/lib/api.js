@@ -3,7 +3,7 @@
  * Connects to local FastAPI backend (http://localhost:8000)
  */
 
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = import.meta.env.PROD ? "/api" : "http://localhost:8000/api";
 
 async function request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`;
